@@ -10,8 +10,24 @@
   <%= csrf_meta_tags %>
 </head>
 <body>
+	<nav class="navbar navbar-inverse navbar-fixed-top">
+		<div class="container-fluid">
+			<div class="navbar navbar-header">
+				<a href="#" class="navbar-brand">Projects</a>
+			</div>
 
-<%= yield %>
+			<div class="navbar-collapse collapse">
+				<ul class="nav navbar navbar-nav navbar-right">
+					<li><a href="#">Logout</a></li>
+				</ul>
+			</div>
+		</div>
+	</nav>
+
+	<div class="container-fluid">
+		<%= yield %>
+	</div>
+
 
 </body>
 </html>
