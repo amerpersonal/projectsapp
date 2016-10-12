@@ -1,4 +1,6 @@
 Projectsapp::Application.routes.draw do
+  resources :projects
+
   # devise_for :users
 
   devise_for :users, controllers: {
@@ -63,10 +65,10 @@ Projectsapp::Application.routes.draw do
   #     resources :products
   #   end
 
-  # root to: "users/sessions#new"
+  root to: 'projects#index'
 
   devise_scope :user do
-    get '/', to: 'users/sessions#new'
+    get '/', to: 'projects#index'
   end 
 end
 

@@ -1,0 +1,35 @@
+<p id="notice"><%= notice %></p>
+
+<div class="row">
+
+  <div class="col-md-7 project-title">
+    <h3>
+      <%= [category_id_to_name(@project.category), @project.title].join(" : ") %>
+    </h3>
+
+    <div class="row">
+      <div class="col-md-12 project-description">
+        <%= @project.description %>
+      </div>
+    </div>
+
+    <div class="row" style="padding-top: 20px">
+      <div class="col-md-5">
+        <span class="glyphicon glyphicon-time"></span>&nbsp;&nbsp;&nbsp;Created&nbsp;&nbsp;<%= @project.created_at.strftime("%b %d %Y %H:%M") %>
+      </div>
+
+      <div class="col-md-5 col-md-offset-2">
+        <span class="glyphicon glyphicon-time"></span>&nbsp;&nbsp;&nbsp;Updated&nbsp;&nbsp;<%= @project.updated_at.strftime("%b %d %Y %H:%M") %>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="col-md-5">
+  </div>
+
+</div>
+
+
+<%= link_to 'Edit', edit_project_path(@project) %> |
+<%= link_to 'Back', projects_path %>
