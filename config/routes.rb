@@ -1,5 +1,13 @@
 Projectsapp::Application.routes.draw do
-  devise_for :users
+  # devise_for :users
+
+  devise_for :users, controllers: {
+        sessions: 'users/sessions',
+        registrations: 'users/registrations',
+        confirmations: 'users/confirmations',
+        passwords: 'users/passwords',
+        unlocks: 'users/unlocks'
+  }
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
@@ -55,6 +63,10 @@ Projectsapp::Application.routes.draw do
   #     resources :products
   #   end
 
-  root to: "home#index"
+  # root to: "users/sessions#new"
+
+  devise_scope :user do
+    get '/', to: 'users/sessions#new'
+  end 
 end
 
