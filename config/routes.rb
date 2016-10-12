@@ -1,5 +1,5 @@
 Projectsapp::Application.routes.draw do
-  resources :projects
+  resources :projects, :only => [:index, :create, :edit, :update, :destroy]
 
   # devise_for :users
 

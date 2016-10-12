@@ -8,6 +8,7 @@ class ProjectsController < ApplicationController
 
   def index
     @projects = params[:category] ? Project.where(category: params[:category]).order(updated_at: :desc) : Project.all.order(updated_at: :desc)
+    
     respond_with(@projects)
   end
 
@@ -28,9 +29,11 @@ class ProjectsController < ApplicationController
     @project.user = current_user
     @project.created_at = DateTime.now
     @project.updated_at = DateTime.now
+
     @project.save
     # respond_with(@project)
 
+    flash[:error] = @project.errors.messages.values.flatten
     redirect_to(action: "index")
   end
 
@@ -38,6 +41,7 @@ class ProjectsController < ApplicationController
     @project.update(project_params)
     # respond_with(@project)
 
+    flash[:error] = @project.errors.messages.values.flatten
     redirect_to edit_project_path(@project)
   end
 

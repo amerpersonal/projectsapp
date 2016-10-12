@@ -75,3 +75,12 @@ body {
 .project-description {
 	padding: 20px 10px;
 }
+
+.project-title-list:hover, .project-title-list:visited {
+	color: #337ab7;
+	text-decoration: none;
+}
+
+.project-in-list > .actions, .project-in-list > .owner, .no-projects {
+	padding-top: 20px;
+}

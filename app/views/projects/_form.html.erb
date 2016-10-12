@@ -1,15 +1,8 @@
 <%= form_for(project) do |f| %>
-  <% if project.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(project.errors.count, "error") %> prohibited this project from being saved:</h2>
-
-      <ul>
-      <% project.errors.full_messages.each do |msg| %>
-        <li><%= msg %></li>
-      <% end %>
-      </ul>
-    </div>
-  <% end %>
+    <!-- <div id="error_explanation"> -->
+      <!-- <h2><%= pluralize(project.errors.count, "error") %> prohibited this project from being saved:</h2> -->
+      
+    <!-- </div> -->
 
   <div class="field">
     <%= f.label :title %><br>
@@ -24,7 +17,11 @@
     <%= f.select :category, all_categories %><br>
   </div>
 
-
+  <ul>
+    <% [flash[:error]].compact.flatten.each do |msg| %>
+      <li class="text-danger"><%= msg %></li>
+    <% end %>
+  </ul>
 
   <div class="actions">
     <%= f.submit project.new_record? ? "Create" : "Edit", :class => "btn btn-md btn-primary btn-block" %>
