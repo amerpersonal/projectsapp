@@ -1,5 +1,11 @@
 Projectsapp::Application.routes.draw do
+  resources :tasks, :only => [:index, :create, :edit, :update, :destroy, :show] do
+    put :change_status
+    put :change_priority
+  end
+
   resources :projects, :only => [:index, :create, :edit, :update, :destroy, :show]
+  # post "/tasks/change_status" => "tasks#change_status"
 
   # devise_for :users
 

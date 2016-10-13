@@ -1,7 +1,7 @@
 class ProjectsController < ApplicationController
   before_action :set_project, only: [:show, :edit, :update, :destroy]
 
-  before_action :authenticate_user!, :only => [:new]
+  before_action :authenticate_user!, :only => [:new, :edit, :update, :create, :destroy]
   before_action :check_project_owner, :only => [:edit, :update, :destroy]
 
   respond_to :html

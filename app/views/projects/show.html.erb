@@ -2,7 +2,7 @@
 
 <div class="row">
 
-  <div class="col-md-7 project-title">
+  <div class="col-md-8 project-title">
     <h3 class="text-primary">
       <%= [category_id_to_name(@project.category), @project.title].join(" : ") %>
     </h3>
@@ -23,13 +23,22 @@
       </div>
 
     </div>
+
+    <div class="row project-tasks">
+      <% if @project.tasks.empty? %>
+      <span class="text-info">No tasks in this project. You can create new one</span>
+      <% else @project.tasks.each do |task| %>
+        <%= render partial: "tasks/task", locals: {task: task} %>
+      <% end %>
+      <% end %>
+    </div>
   </div>
 
-  <div class="col-md-5">
+
+  <div class="col-md-3 col-md-offset-1">
+    <h4>Add new task</h4>
+      <%= render partial: "tasks/form", locals: {task: flash[:task].nil? ? Task.new(project_id: @project.id) : Task.create(flash[:task])} %>
   </div>
 
 </div>
 
-
-<%= link_to 'Edit', edit_project_path(@project) %> |
-<%= link_to 'Back', projects_path %>

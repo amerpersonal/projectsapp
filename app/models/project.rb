@@ -1,5 +1,6 @@
 class Project < ActiveRecord::Base
   	belongs_to :user
+  	has_many :tasks
 
 	validate :valid_title, :valid_description
 

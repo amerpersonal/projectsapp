@@ -54,16 +54,16 @@ body {
 	margin-right: 10px;
 }
 
-.project-in-list .actions a:hover {
+.project-in-list .actions a:hover, .task-in-list .actions a:hover{
 	text-decoration: none;
 	background-color: transparent;
 }
 
-.project-in-list .actions a.edit:hover {
+.project-in-list .actions a.edit:hover, .task-in-list .actions a.edit:hover {
 	color: #333;
 }
 
-.project-in-list .actions a.remove, .project-in-list .actions a.remove:hover {
+.project-in-list .actions a.remove, .project-in-list .actions a.remove:hover, .task-in-list .actions a.remove, .task-in-list .actions a.remove:hover {
 	color: #d9534f;
 }
 
@@ -81,6 +81,15 @@ body {
 	text-decoration: none;
 }
 
-.project-in-list > .actions, .project-in-list > .owner, .no-projects {
+.project-in-list > .actions, .task-in-list > .actions, .project-in-list > .owner, .no-projects {
 	padding-top: 20px;
+}
+
+.project-tasks {
+	padding: 30px 20px;
+}
+
+.task-in-list div {
+	padding-left: 10px !important;
+	padding-right: 0 !important;
 }
