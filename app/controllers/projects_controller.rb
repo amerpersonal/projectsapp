@@ -33,7 +33,11 @@ class ProjectsController < ApplicationController
     @project.save
     # respond_with(@project)
 
-    flash[:error] = @project.errors.messages.values.flatten
+    unless @project.valid?
+      flash[:error] = @project.errors.messages.values.flatten
+      flash[:project] = @project.attributes
+    end
+
     redirect_to(action: "index")
   end
 
