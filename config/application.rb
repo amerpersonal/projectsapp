@@ -23,6 +23,11 @@ module Projectsapp
     config.action_view.field_error_proc = Proc.new { |html_tag, instance| 
       html_tag
     }
+
+    config.autoload_paths << Rails.root.join('lib')
+
+    # config.time_zone = :local
+    # config.active_record.default_timezone = :local
   end
 end
 

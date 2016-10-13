@@ -1,32 +1,49 @@
-<div class="row task-in-list">
+<div class="row task-in-list <%= task_css_class(task) %>">
   <div class="col-md-5">
     <div class="row">
-      <%= link_to task, :class => "text-primary project-title-list" do %>
+      <%= link_to task, :class => "text-primary task-title-list" do %>
         <h5><%= task.title %></h5>
       <% end %>
     </div>
     <div class="row">
       <span class="glyphicon glyphicon-time"></span>
-      <small> <%= task.updated_at.strftime("%b %d %Y %H:%M") %></small>
+      <small><%= task.updated_at.strftime("%b %d %Y %H:%M") %></small>
     </div>
+    <% if flash[:task_errors] && !flash[:task_errors][task.id.to_s].blank? %>
+      <ul>
+        <% flash[:task_errors][task.id.to_s].each do |task_error| %>
+          <li><small class="text-danger"><%= task_error %></small></li>
+        <% end %>
+      </ul>
+    <% end %>
   </div>
 
   <div class="col-md-7 actions">
     <div class="row">
         <% if current_user && current_user.projects.include?(task.project) %>
-          <div class="col-md-2">
+          <div class="col-md-1">
             <%= link_to '', edit_task_path(task), :class => "glyphicon glyphicon-edit edit" %>
             <%= link_to '', task, method: :delete, data: { confirm: 'Are you sure?' }, :class => "glyphicon glyphicon-remove remove" %>
           </div>
 
-          <div class="col-md-3">
-            <div class="row"><span>Status:&nbsp;</span><strong><%= task.text_status %></strong></div>
-            <div class="row"><%= change_status_html(task) %></div>
+          <div class="col-md-5">
+            <div class="pull-left">
+              <div class="row"><span>Status:&nbsp;</span><strong><%= task.text_status %></strong></div>
+              <div class="row"><%= change_status_html(task) %></div>
+            </div>
+
+            <div class="pull-right">
+              <strong>P</strong><%= change_priority_html(task) %>
+            </div>
           </div>
 
-          <div class="col-md-3 task-priority">
-            <strong>P</strong><%= change_priority_html(task) %>
+          <div class="col-md-6">
+            <% if task.text_status == "Opened" || task.text_status == "Started" %>
+              <div class="row"><small>Deadline&nbsp;<%= task.until_deadline %></small></div>
+              <div class="row"><%= link_to "Change", edit_task_path(task), :class => "btn btn-xs" %></div>
+            <% end %>
           </div>
+
         <% end %>
     </div>
   </div>

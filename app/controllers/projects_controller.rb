@@ -31,7 +31,6 @@ class ProjectsController < ApplicationController
     @project.updated_at = DateTime.now
 
     @project.save
-    # respond_with(@project)
 
     unless @project.valid?
       flash[:error] = @project.errors.messages.values.flatten
@@ -43,15 +42,13 @@ class ProjectsController < ApplicationController
 
   def update
     @project.update(project_params)
-    # respond_with(@project)
 
-    flash[:error] = @project.errors.messages.values.flatten
+    flash[:error] = @project.errors.messages.values.flatten unless @project.valid?
     redirect_to edit_project_path(@project)
   end
 
   def destroy
     @project.destroy
-    # respond_with(@project)
     redirect_to(action: "index")
   end
 

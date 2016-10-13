@@ -15,7 +15,7 @@
   </div>
   <div class="form-group">
     <%= f.label :priority %><br>
-    <%= f.select :priority, Task.priorities %>
+    <%= f.select :priority, Task::PRIORITIES %>
   </div>
 
   <ul>
@@ -25,6 +25,6 @@
   </ul>
 
   <div class="actions">
-    <%= f.submit "Create", :class => "btn btn-primary" %>
+    <%= f.submit task.new_record? ? "Create" : "Edit", :class => "btn btn-primary" %>
   </div>
 <% end %>

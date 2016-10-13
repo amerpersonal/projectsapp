@@ -67,13 +67,14 @@ body {
 	color: #d9534f;
 }
 
-.add-project-section {
+.add-section {
 	padding: 20px !important;
-	border-left: 1px #666 solid;
+	border-left: 1px #ccc solid;
 }
 
-.project-description {
+.project-description, .task-description {
 	padding: 20px 10px;
+	border-bottom: 1px dashed #ccc;
 }
 
 .project-title-list:hover, .project-title-list:visited {
@@ -89,7 +90,32 @@ body {
 	padding: 30px 20px;
 }
 
+.task-in-list {
+	border-bottom: 1px solid #ccc;
+}
+
 .task-in-list div {
 	padding-left: 10px !important;
 	padding-right: 0 !important;
+}
+
+.container-edit {
+	padding-top: 20px;
+}
+
+form.change-priority-form > div:first-child {
+  display: none !important;
+}
+
+.task-show-container {
+	padding: 30px;
+}
+
+.task-show-header {
+	padding: 10px 0;
+}
+
+a:hover, a:visited {
+	background-color: transparent !important;
+	text-decoration: none;
 }

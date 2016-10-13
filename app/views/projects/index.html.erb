@@ -12,7 +12,7 @@
   </div>
 
   <% if user_signed_in? %>
-    <div class="col-sm-2 col-sm-offset-2 col-md-3 col-md-offset-1 add-project-section">
+    <div class="col-sm-2 col-sm-offset-2 col-md-3 col-md-offset-1 add-section">
         <h4>Add new project</h4>
         <%= render partial: "form", locals: {project: flash[:project].nil? ? Project.new : Project.create(flash[:project])} %>
     </div>

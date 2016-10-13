@@ -1,6 +1,6 @@
 class TasksController < ApplicationController
   before_action :set_task, only: [:show, :edit, :update, :destroy, :change_status, :change_priority]
-  before_action :check_permission, :only => [:edit, :update, :destroy, :new, :create]
+  before_action :check_permission, :only => [:edit, :update, :destroy, :new]
   before_action :authenticate_user!, :only => [:change_status, :change_priority]
 
   respond_to :html
@@ -20,15 +20,28 @@ class TasksController < ApplicationController
   end
 
   def change_status
-    @task.change_status
-    @task.save
+    
+    if @task.expired?
+      flash[:task_errors] = {}
+      flash[:task_errors][@task.id.to_s] = []
+      flash[:task_errors][@task.id.to_s] << "Status cannot be changed for expired task"
+    else
+      @task.change_status
+      @task.save
+    end
 
     redirect_to(project_path(@task.project))
   end
 
   def change_priority
-    @task.priority = params[:priority]
-    @task.save
+    if @task.expired? || @task.text_status == "Resolved" || @task.text_status == "Closed"
+      flash[:task_errors] = {}
+      flash[:task_errors][@task.id.to_s] = []
+      flash[:task_errors][@task.id.to_s] << "Priority cannot be changed for expired, closed or resolved task"
+    else
+      @task.priority = params[:priority].to_i rescue nil
+      @task.save
+    end
 
     redirect_to(project_path(@task.project))
   end
@@ -38,10 +51,9 @@ class TasksController < ApplicationController
 
   def create
     @task = Task.new(task_params)
-    @task.status = Task.statuses.values.first
+    @task.status = Task::STATUSES.values.first
     @task.save
-    # respond_with(@task)
-
+    
     unless @task.valid?
       flash[:task] = @task.attributes
       flash[:error] = @task.errors.messages.values.flatten
@@ -52,12 +64,14 @@ class TasksController < ApplicationController
 
   def update
     @task.update(task_params)
-    respond_with(@task)
+
+    @task.valid? ? flash[:message] = "Task updated" : flash[:error] = @task.errors.messages.values.flatten
+    redirect_to edit_task_path(@task.id)
   end
 
   def destroy
     @task.destroy
-    respond_with(@task)
+    redirect_to(project_path(@task.project_id))
   end
 
   private
@@ -76,6 +90,6 @@ class TasksController < ApplicationController
     end
 
     def check_permission
-      redirect_to(show_path(@task.project)) if user_signed_in? && current_user.projects.include?(@task.project)
+      redirect_to(project_path(@task.project)) unless user_signed_in? && current_user.projects.include?(@task.project)
     end
 end

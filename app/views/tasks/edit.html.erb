@@ -1,6 +1,8 @@
-<h1>Editing task</h1>
+<div class="container-fluid container-edit">
+	<%= render partial: 'form', locals: {task: @task} %>
+	<% if flash[:message] %>
+	<span class="text-success"><%= flash[:message] %></span>
+	<% end %>
 
-<%= render 'form' %>
-
-<%= link_to 'Show', @task %> |
-<%= link_to 'Back', tasks_path %>
+	<%= link_to "Back to project", project_path(@task.project_id) %>
+</div>

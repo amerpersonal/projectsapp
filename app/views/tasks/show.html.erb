@@ -1,44 +1,42 @@
-<p id="notice"><%= notice %></p>
+<div class="row task-show-container">
+    <div class="row bg-info task-show-header">
+      <div class="col-md-6">
+        <h4 class="text-lg text-primary task-title" style="display: inline-block;"><%= @task.title %></h4>
+        <span>Project:&nbsp</span><%= link_to @task.project.title, project_path(@task.project_id) %>
+        <%= link_to edit_task_path(@task.id) do %>
+          <span class="glyphicon glyphicon-edit"></span>
+        <% end %>
+      </div>
 
-<p>
-  <strong>Title:</strong>
-  <%= @task.title %>
-</p>
+      <div class="col-md-6 pull-right">
+        <div class="row">
+          <div class="col-md-4">
+            <div class="row"><span>Status:&nbsp;</span><strong><%= @task.text_status %></strong></div>
+            <div class="row"><%= change_status_html(@task) %></div>
+          </div>
+          <div class="col-md-2"><strong>P</strong><%= change_priority_html(@task) %></div>
+          <div class="col-md-6">
+              <div class="row">Deadline&nbsp;<strong><%= @task.until_deadline %></strong></div>
+              <div class="row"><%= link_to "Change", edit_task_path(@task), :class => "btn btn-xs" %></div>
+          </div>
+        </div>
+      </div>
+    </div>
 
-<p>
-  <strong>Description:</strong>
-  <%= @task.description %>
-</p>
+    <div class="row">
+      <div class="col-md-12 task-description">
+        <%= @task.description %>
+      </div>
+    </div>
 
-<p>
-  <strong>Status:</strong>
-  <%= @task.status %>
-</p>
+    <div class="row">
+      <div class="col-md-5">
+        <span class="glyphicon glyphicon-time"></span>&nbsp;&nbsp;&nbsp;Created&nbsp;&nbsp;<%= @task.created_at.strftime("%b %d %Y %H:%M") %>
+      </div>
 
-<p>
-  <strong>Deadline:</strong>
-  <%= @task.deadline %>
-</p>
+      <div class="col-md-5 col-md-offset-2">
+        <span class="glyphicon glyphicon-time"></span>&nbsp;&nbsp;&nbsp;Updated&nbsp;&nbsp;<%= @task.updated_at.strftime("%b %d %Y %H:%M") %>
+      </div>
 
-<p>
-  <strong>Priority:</strong>
-  <%= @task.priority %>
-</p>
-
-<p>
-  <strong>Created at:</strong>
-  <%= @task.created_at %>
-</p>
-
-<p>
-  <strong>Updated at:</strong>
-  <%= @task.updated_at %>
-</p>
-
-<p>
-  <strong>Project:</strong>
-  <%= @task.project %>
-</p>
-
-<%= link_to 'Edit', edit_task_path(@task) %> |
-<%= link_to 'Back', tasks_path %>
+    </div>
+</div>

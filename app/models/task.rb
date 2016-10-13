@@ -1,44 +1,63 @@
 class Task < ActiveRecord::Base
   	belongs_to :project
-	validate :valid_title, :valid_description
+	validate :valid_title, :valid_description, :valid_deadline
 
-	TASK_STATUSES = {
+	include Utils
+
+	STATUSES = {
 		"Opened" => 1,
 		"Started" => 2,
 		"Resolved" => 3,
 		"Closed" => 4
 	}
 
-	TASK_PRIORITIES = [3, 2, 1]
+	PRIORITIES = [3, 2, 1]
+
+	MIN_DURATION = 30.minutes
+
+	MAX_TITLE_LENGTH = 8
+
+	MAX_DESCRIPTION_LENGTH = 10
 
 	def valid_title
 		normalized_title = title.strip
-		errors.add(:title, "Title has to be min 10 chars long and have to start with letter") if normalized_title.length < 10 || /[[:digit:]]/.match(normalized_title[0])
+		if normalized_title.length < MAX_TITLE_LENGTH || /[[:digit:]]/.match(normalized_title[0])
+			errors.add(:title, "Title has to be min #{MAX_TITLE_LENGTH} chars long and have to start with letter")
+		end
 	end
 
 	def valid_description
 		normalized_description = description.strip
-		errors.add(:description, "Description has to have at least 2 words and 10 letters") if normalized_description.length < 10 || description.strip.split(" ").length < 2
+		if normalized_description.length < MAX_DESCRIPTION_LENGTH || description.strip.split(" ").length < 2
+			errors.add(:description, "Description has to have at least 2 words and #{MAX_DESCRIPTION_LENGTH} letters")
+		end
+	end
+
+	def valid_deadline
+		if Time.now + MIN_DURATION > self.deadline
+			errors.add(:description, "Minimum task duration is  #{DateTime.strptime(MIN_DURATION.to_s, "%s").strftime("%M")} minutes")
+		end
+	end
+
+	def expired?
+		self.deadline < Time.now
 	end
 
 	def text_status
-		Hash[Task::statuses.to_a.map { |kv| [kv.last, kv.first] }].with_indifferent_access[status]
-	end
-
-	def self.statuses
-		TASK_STATUSES
-	end
-
-	def self.priorities
-		TASK_PRIORITIES
+		Hash[STATUSES.to_a.map { |kv| [kv.last, kv.first] }].with_indifferent_access[status]
 	end
 
 	def new_status_index
-		status_index = Task.statuses.values.find_index(status)
-		status_index == Task.statuses.length - 1 ? 0 : status_index + 1
+		status_index = STATUSES.values.find_index(status)
+		status_index == STATUSES.length - 1 ? 0 : status_index + 1
 	end
 
 	def change_status
-		self.status = Task.statuses.values[new_status_index]
+		self.status = STATUSES.values[new_status_index]
 	end
+
+	def until_deadline
+		timerange_to_readable_string(Time.now, self.deadline)
+	end
+
 end
