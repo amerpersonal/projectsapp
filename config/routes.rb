@@ -5,9 +5,6 @@ Projectsapp::Application.routes.draw do
   end
 
   resources :projects, :only => [:index, :create, :edit, :update, :destroy, :show]
-  # post "/tasks/change_status" => "tasks#change_status"
-
-  # devise_for :users
 
   devise_for :users, controllers: {
         sessions: 'users/sessions',
@@ -74,7 +71,7 @@ Projectsapp::Application.routes.draw do
   root to: 'projects#index'
 
   devise_scope :user do
-    get '/', to: 'projects#index'
+    get "/" => 'projects#index'
   end 
 end
 

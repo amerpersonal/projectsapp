@@ -1,0 +1,102 @@
+.signin-container {
+    align: center;
+    margin: 0 auto;
+}
+
+.big-form {
+    margin: 80px auto;
+}
+
+.signin-form {
+    width: 320px;
+}
+
+.signup-form {
+    width: 360px;
+}
+
+.big-form input, .big-form button {
+    margin-bottom: 10px;
+}
+
+.navbar {
+	margin-bottom: 0 !important;
+}
+
+body {
+	padding-top: 30px !important;
+}
+
+.project-in-list {
+	border-bottom: 1px dotted #999;
+}
+
+.project-in-list .actions a {
+	margin-right: 10px;
+}
+
+.project-in-list .actions a:hover, .task-in-list .actions a:hover{
+	text-decoration: none;
+	background-color: transparent;
+}
+
+.project-in-list .actions a.edit:hover, .task-in-list .actions a.edit:hover {
+	color: #333;
+}
+
+.project-in-list .actions a.remove, .project-in-list .actions a.remove:hover, .task-in-list .actions a.remove, .task-in-list .actions a.remove:hover {
+	color: #d9534f;
+}
+
+.add-section {
+	padding: 20px !important;
+	border-left: 1px #ccc solid;
+}
+
+.project-description, .task-description {
+	padding: 20px 10px;
+	border-bottom: 1px dashed #ccc;
+}
+
+.project-title-list:hover, .project-title-list:visited {
+	color: #337ab7;
+	text-decoration: none;
+}
+
+.project-in-list > .actions, .task-in-list > .actions, .project-in-list > .owner, .no-projects {
+	padding-top: 20px;
+}
+
+.project-tasks {
+	padding: 30px 20px;
+}
+
+.task-in-list {
+	border-bottom: 1px solid #ccc;
+}
+
+.task-in-list div {
+	padding-left: 10px !important;
+	padding-right: 0 !important;
+}
+
+.container-edit {
+	padding-top: 20px;
+}
+
+form.change-priority-form > div:first-child {
+  display: none !important;
+}
+
+.task-show-container {
+	padding: 30px;
+}
+
+.task-show-header {
+	padding: 10px 0;
+}
+
+a:hover, a:visited {
+	background-color: transparent !important;
+	text-decoration: none;
+}
