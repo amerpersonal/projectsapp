@@ -1,3 +1,5 @@
 <div class="container-fluid container-edit">
 	<%= render partial: 'form', locals: {project: @project} %>
+
+	<%= link_to "Define tasks", project_path(@project) %>
 </div>

@@ -1,7 +1,9 @@
 class Users::RegistrationsController < Devise::RegistrationsController
-before_filter :configure_sign_up_params, only: [:create]
-before_filter :configure_account_update_params, only: [:update]
+  layout :layout_by_resource
 
+  before_filter :configure_sign_up_params, only: [:create]
+  before_filter :configure_account_update_params, only: [:update]
+  
   # GET /resource/sign_up
   def new
     super
@@ -50,11 +52,19 @@ before_filter :configure_account_update_params, only: [:update]
 
   # The path used after sign up.
   def after_sign_up_path_for(resource)
-    projects_path
+    user_signed_in? ? projects_path : new_user_registration_path
   end
 
   def after_sign_in_path_for(resource)
     projects_path
+  end
+
+  def layout_by_resource
+    if devise_controller? && !user_signed_in?
+      "header"
+    else
+      "application"
+    end
   end
 
   # The path used after sign up for inactive accounts.

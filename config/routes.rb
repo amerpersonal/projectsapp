@@ -14,10 +14,10 @@ Projectsapp::Application.routes.draw do
         unlocks: 'users/unlocks'
   }
 
-  root to: 'projects#index'
+  # root to: 'users/sessions#new'
 
-  # devise_scope :user do
-  #   get "/" => 'projects#index'
-  # end 
+  devise_scope :user do
+    get "/" => 'users/sessions#new'
+  end 
 end
 

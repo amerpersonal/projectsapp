@@ -1,7 +1,9 @@
 class TasksController < ApplicationController
   before_action :set_task, only: [:show, :edit, :update, :destroy, :change_status, :change_priority]
-  before_action :check_permission, :only => [:edit, :update, :destroy, :new]
+  before_action :check_permissions, :only => [:edit, :update, :destroy, :new]
   before_action :authenticate_user!, :only => [:change_status, :change_priority]
+
+  before_action :authenticate_user!
 
   respond_to :html
 
@@ -108,7 +110,7 @@ class TasksController < ApplicationController
       params.require(:task).permit(:title, :description, :status, :deadline, :priority, :created_at, :updated_at, :project_id)
     end
 
-    def check_permission
+    def check_permissions
       redirect_to(project_path(@task.project)) unless user_signed_in? && current_user.projects.include?(@task.project)
     end
 end

@@ -1,6 +1,5 @@
 module ApplicationHelper
     def show_errors(resource)
-    	puts "=== r: #{resource.inspect}"
     	errors = if resource.is_a?(ActionDispatch::Flash::FlashHash)
     		resource.to_hash
     	else

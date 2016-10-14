@@ -10,6 +10,16 @@ class Project < ActiveRecord::Base
 
 	DESCRIPTION_MAX_LENGTH = 100
 
+	CATEGORIES = ["general", "front_end", "back_end", "product_design", "database", "data_management"]
+	
+	def self.all_categories
+		CATEGORIES.map { |category| [category_id_to_name(category) , category] }
+	end
+
+	def self.category_id_to_name(category)
+		category.split("_").map { |word| word.camelize}.join(" ")
+	end
+
 	def valid_title
 		normalized_title = title.strip
 		if normalized_title.length < MIN_TITLE_LENGTH || /[[:digit:]]/.match(normalized_title[0])

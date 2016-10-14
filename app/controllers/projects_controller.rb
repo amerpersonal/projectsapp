@@ -1,8 +1,8 @@
 class ProjectsController < ApplicationController
   before_action :set_project, only: [:show, :edit, :update, :destroy]
 
-  before_action :authenticate_user!, :only => [:new, :edit, :update, :create, :destroy]
-  before_action :check_project_owner, :only => [:edit, :update, :destroy]
+  before_action :authenticate_user!
+  before_action :check_permissions, :only => [:edit, :update, :destroy]
 
   respond_to :html
 
@@ -61,7 +61,7 @@ class ProjectsController < ApplicationController
       params.require(:project).permit(:title, :description, :category)
     end
 
-    def check_project_owner
-      user_signed_in? ? @project.user_id == current_user.id : false
+    def check_permissions
+      user_signed_in? && @project.user_id == current_user.id
     end
 end
