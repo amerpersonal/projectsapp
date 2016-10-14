@@ -97,6 +97,14 @@ form.change-priority-form > div:first-child {
 }
 
 a:hover, a:visited {
-	background-color: transparent !important;
-	text-decoration: none;
+	text-decoration: none !important;
+}
+
+.add-comment, .comments {
+	margin-top: 20px !important;
+}
+
+.comment {
+	padding: 15px 15px 0 15px;
+	margin-top: 1px;
 }

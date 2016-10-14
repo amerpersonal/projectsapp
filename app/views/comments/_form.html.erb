@@ -1,0 +1,11 @@
+<%= form_for(comment) do |f| %>
+  <%= f.hidden_field :task_id %>
+  
+  <div class="form-group">
+    <%= f.text_area :text, row: 4, placeholder: "Add your comment", :class => "form-control" %>
+  </div>
+  
+  <div class="actions">
+    <%= f.submit "Add comment", :class => "btn btn-danger" %>
+  </div>
+<% end %>

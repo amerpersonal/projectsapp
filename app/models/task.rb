@@ -1,5 +1,6 @@
 class Task < ActiveRecord::Base
   	belongs_to :project
+  	has_many :comments
 	validate :valid_title, :valid_description, :valid_deadline
 
 	include Utils

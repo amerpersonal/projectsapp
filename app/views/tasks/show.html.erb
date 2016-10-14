@@ -62,4 +62,16 @@
       </div>
 
     </div>
+
+    <% if user_signed_in? && current_user == @task.project.user %>
+      <div class="row add-comment">
+        <%= render partial: "comments/form", locals: { comment: Comment.create(task_id: @task.id) } %>
+      </div>
+    <% end %>
+
+    <div class="row comments">
+      <% @task.comments.sort { |a, b| b.created_at <=> a.created_at }.each do |comment| %>
+        <%= render partial: "comments/comment", locals: {comment: comment} %>
+      <% end %>
+    </div>
 </div>

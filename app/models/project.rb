@@ -13,11 +13,7 @@ class Project < ActiveRecord::Base
 	CATEGORIES = ["general", "front_end", "back_end", "product_design", "database", "data_management"]
 	
 	def self.all_categories
-		CATEGORIES.map { |category| [category_id_to_name(category) , category] }
-	end
-
-	def self.category_id_to_name(category)
-		category.split("_").map { |word| word.camelize}.join(" ")
+		CATEGORIES.map { |category| [category.split("_").map { |word| word.camelize}.join(" ") , category] }
 	end
 
 	def valid_title
@@ -32,6 +28,10 @@ class Project < ActiveRecord::Base
 		if normalized_description.length < MIN_DESCRIPTION_LENGTH || description.strip.split(" ").length < 2
 			errors.add(:description, "Description has to have at least 2 words and #{MIN_DESCRIPTION_LENGTH} letters")
 		end
+	end
+
+	def category_name
+		category.split("_").map { |word| word.camelize}.join(" ")
 	end
 
 	def shorten_description

@@ -1,4 +1,6 @@
 Projectsapp::Application.routes.draw do
+  resources :comments
+
   resources :tasks, :only => [:index, :create, :edit, :update, :destroy, :show] do
     put :change_status
     put :change_priority

@@ -1,0 +1,10 @@
+<div class="row bg-warning comment">
+		<span class="glyphicon glyphicon-user"></span>
+		<small><%= comment.user.email %>&nbsp;on&nbsp;<%= comment.created_at.strftime("%b %d %Y %H:%M") %></small>
+		<% if user_signed_in? && current_user == comment.task.project.user %>
+		<%= link_to "", comment, method: :delete, :class => "pull-right glyphicon glyphicon-remove text-danger" %>
+		<% end %>
+		<br/></br/>
+
+		<p><%= comment.text %></p>
+</div>

@@ -2,7 +2,7 @@
 
   <div class="col-md-8">
     <h3 class="text-primary project-title">
-      <%= [category_id_to_name(@project.category), @project.title].join(" : ") %>
+      <%= [@project.category_name, @project.title].join(" : ") %>
     </h3>
 
     <div class="row">
