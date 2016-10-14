@@ -13,7 +13,7 @@ class Task < ActiveRecord::Base
 
 	PRIORITIES = [3, 2, 1]
 
-	MIN_DURATION = 30.minutes
+	MIN_DURATION = 30
 
 	MAX_TITLE_LENGTH = 8
 
@@ -34,8 +34,9 @@ class Task < ActiveRecord::Base
 	end
 
 	def valid_deadline
-		if Time.now + MIN_DURATION > self.deadline
-			errors.add(:description, "Minimum task duration is  #{DateTime.strptime(MIN_DURATION.to_s, "%s").strftime("%M")} minutes")
+		min_deadline = Time.now + MIN_DURATION.minutes
+		if (Time.now + MIN_DURATION.minutes) > self.deadline
+			errors.add(:deadline, "Minimum task duration is  #{MIN_DURATION} minutes")
 		end
 	end
 
@@ -49,6 +50,7 @@ class Task < ActiveRecord::Base
 
 	def new_status_index
 		status_index = STATUSES.values.find_index(status)
+		status_index = 0 if status_index.nil?
 		status_index == STATUSES.length - 1 ? 0 : status_index + 1
 	end
 

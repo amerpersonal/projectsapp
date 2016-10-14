@@ -7,6 +7,16 @@
         <% end if current_user == @task.project.user %>
         <br/>
         <span>Project:&nbsp</span><%= link_to @task.project.title, project_path(@task.project_id) %>
+        
+        <% if flash[:task_errors] && !flash[:task_errors][@task.id.to_s].blank? %>
+          <br/>
+          <ul>
+            <% flash[:task_errors][@task.id.to_s].each do |task_error| %>
+              <li><small class="text-danger"><%= task_error %></small></li>
+            <% end %>
+          </ul>
+        <% end %>
+
       </div>
 
       <div class="col-md-6 pull-right">

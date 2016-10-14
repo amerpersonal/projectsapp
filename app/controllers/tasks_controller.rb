@@ -30,7 +30,8 @@ class TasksController < ApplicationController
       @task.save
     end
 
-    redirect_to(project_path(@task.project))
+    redirect_path = request.referer.include?("/tasks/") ? task_path(@task) : project_path(@task.project)
+    redirect_to(redirect_path)
   end
 
   def change_priority
@@ -43,15 +44,21 @@ class TasksController < ApplicationController
       @task.save
     end
 
-    redirect_to(project_path(@task.project))
+    redirect_path = request.referer.include?("/tasks/") ? task_path(@task) : project_path(@task.project)
+    redirect_to(redirect_path)
   end
 
   def edit
+
   end
 
   def create
     @task = Task.new(task_params)
-    @task.status = Task::STATUSES.values.first
+    deadline = task_params[:deadline].to_i rescue 1
+    @task.deadline = deadline.hours.from_now
+    @task.priority = Task::PRIORITIES.first unless Task::PRIORITIES.include?(@task.priority.to_i)    
+    @task.status = Task::STATUSES.first.last
+
     @task.save
     
     unless @task.valid?
@@ -63,7 +70,19 @@ class TasksController < ApplicationController
   end
 
   def update
-    @task.update(task_params)
+    task_args = task_params
+    unless params[:task_deadline_hours].first.blank?
+      deadline = params[:task_deadline_hours].clone.first.to_i rescue 1
+
+      new_deadline = deadline.hours.from_now
+      task_args["deadline(1i)"] = new_deadline.year.to_s
+      task_args["deadline(2i)"] = new_deadline.month.to_s
+      task_args["deadline(3i)"] = new_deadline.day.to_s
+      task_args["deadline(4i)"] = new_deadline.hour.to_s
+      task_args["deadline(5i)"] = new_deadline.min.to_s
+    end
+
+    @task.update(task_args)
 
     @task.valid? ? flash[:message] = "Task updated" : flash[:error] = @task.errors.messages.values.flatten
     redirect_to edit_task_path(@task.id)

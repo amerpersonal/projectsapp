@@ -4,16 +4,24 @@ class Project < ActiveRecord::Base
 
 	validate :valid_title, :valid_description
 
+	MIN_TITLE_LENGTH = 8
+
+	MIN_DESCRIPTION_LENGTH = 10
+
 	DESCRIPTION_MAX_LENGTH = 100
 
 	def valid_title
 		normalized_title = title.strip
-		errors.add(:title, "Title has to be min 10 chars long and have to start with letter") if normalized_title.length < 10 || /[[:digit:]]/.match(normalized_title[0])
+		if normalized_title.length < MIN_TITLE_LENGTH || /[[:digit:]]/.match(normalized_title[0])
+			errors.add(:title, "Title has to be min #{MIN_TITLE_LENGTH} chars long and have to start with letter")
+		end
 	end
 
 	def valid_description
 		normalized_description = description.strip
-		errors.add(:description, "Description has to have at least 2 words and 10 letters") if normalized_description.length < 10 || description.strip.split(" ").length < 2
+		if normalized_description.length < MIN_DESCRIPTION_LENGTH || description.strip.split(" ").length < 2
+			errors.add(:description, "Description has to have at least 2 words and #{MIN_DESCRIPTION_LENGTH} letters")
+		end
 	end
 
 	def shorten_description

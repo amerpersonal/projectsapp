@@ -11,7 +11,15 @@
   </div>
   <div class="form-group">
     <%= f.label :deadline %><br>
-    <%= f.datetime_select :deadline, :class => "form-control" %>
+    <% if task.new_record? %>
+      <%= f.number_field :deadline, min: 1, value: 1 , :style => "width: 50px;" %><span>&nbsp;hours</span>
+     <% else %>
+      <span><%= task.until_deadline %>&nbsp;(don't fill in if don't want to change)</span>
+      <div style="display: none;">
+        <%= f.datetime_select :deadline, :class => "form-control" %>
+      </div>
+      <%= number_field :task_deadline_hours, nil, min: 1, :style => "width: 50px;" %><span>&nbsp;hours</span>
+     <% end %> 
   </div>
   <div class="form-group">
     <%= f.label :priority %><br>
