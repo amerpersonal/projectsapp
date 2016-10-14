@@ -20,10 +20,10 @@
 			<div class="navbar-collapse collapse">
 				<ul class="nav navbar navbar-nav navbar-right">
 					<% if user_signed_in? %>
-						<li><%= link_to 'Logout', {controller: "users/sessions", action: "destroy"}, method: :delete %></li>
+						<li><%= link_to 'Logout', destroy_user_session_path, method: "delete" %></li>
 					<% else %>
-						<li><%= link_to 'Registration', {controller: "users/registrations", action: "new"} %></li>
-						<li><%= link_to 'Login', {controller: "users/sessions", action: "new"} %></li>
+						<li><%= link_to 'Registration', new_user_registration_path %></li>
+						<li><%= link_to 'Login', new_user_session_path %></li>
 					<% end %>
 				</ul>
 			</div>

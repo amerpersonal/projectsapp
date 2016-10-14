@@ -1,12 +1,21 @@
 module ApplicationHelper
     def show_errors(resource)
+    	puts "=== r: #{resource.inspect}"
+    	errors = if resource.is_a?(ActionDispatch::Flash::FlashHash)
+    		resource.to_hash
+    	else
+    		resource.errors.messages.select { |field, msg| !msg.empty? }
+    	end
+
     	content_tag :ul do
-    		resource.errors.messages.each do |field, msg|
-    			unless msg.empty?
-    				formatted_msg = [field.to_s.split("_").map { |word| word.camelize }.join(" "), msg].join(" ")
-    				puts "xxx #{formatted_msg}"
-    				concat(content_tag :li, formatted_msg, :class => "text-danger")
-    			end
+    		errors.each do |field, msg|
+    			next if field == :notice
+				formatted_msg = if field == :alert || field == :error
+					msg
+				else
+					[field.to_s.split("_").map { |word| word.camelize }.join(" "), msg].join(" ")
+				end
+				concat(content_tag :li, formatted_msg, :class => "text-danger")
     		end
     	end
     end
